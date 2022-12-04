@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import s from './App.module.css';
+import {Counter} from "./Components/Counter/Counter";
+import {SetCounter} from "./Components/setCounter/SetCounter";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    let [startValue, setStartValue] = useState(0);
+    let [maxValue, setMaxValue] = useState(5);
+    let [editMode, setEditMode] = useState(false);
+
+    useEffect(() => {
+        let maxVal = localStorage.getItem('maxValue')
+        let startVal = localStorage.getItem('startValue')
+        maxVal && setMaxValue(JSON.parse(maxVal))
+        startVal && setStartValue(JSON.parse(startVal))
+    }, [])
+
+    let setMaxValueToLocalStorage = (val: number) => {
+        localStorage.setItem('maxValue', JSON.stringify(val));
+        setMaxValue(val);
+    }
+
+    let setStartValueToLocalStorage = (val: number) => {
+        localStorage.setItem('startValue', JSON.stringify(val));
+        setStartValue(val);
+    }
+
+    return (
+        <div className={s.app}>
+            <SetCounter
+                maxValue={maxValue}
+                startValue={startValue}
+                setStartValue={setStartValueToLocalStorage}
+                setMaxValue={setMaxValueToLocalStorage}
+                setEditMode={setEditMode}
+            />
+            <Counter maxValue={maxValue}
+                     startValue={startValue}
+                     editMode={editMode}
+
+            />
+        </div>
+    );
 }
 
 export default App;

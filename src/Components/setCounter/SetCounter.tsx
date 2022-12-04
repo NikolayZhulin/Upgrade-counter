@@ -1,33 +1,46 @@
-import s from './Counter.module.css'
+import s from './SetCounter.module.css'
 import {useState} from "react";
 import {Button} from "../Button/Button";
+import {SetValueInput} from "../SetValueInput/SetValueInput";
+
+type SetCounterPropsType = {
+    startValue: number;
+    maxValue: number;
+    setStartValue: (value: number) => void
+    setMaxValue: (value: number) => void
+    setEditMode:(editMode:boolean)=>void
+}
+
+export const SetCounter = (props: SetCounterPropsType) => {
 
 
-export const Counter = () => {
-
-    let [count, setCount] = useState<number>(0)
-
-    const increaseCounter = () => {
-        setCount(count + 1)
+    const addStartValue = (val: string) => {
+        props.setEditMode(true)
+        props.setStartValue(+val)
     }
-
-    const resetCounter = () => {
-        setCount(0)
+    const addMaxValue = (val: string) => {
+        props.setEditMode(true)
+        props.setMaxValue(+val)
     }
-
-    let finalClassName = s.count_number + (count === 5 //Нужно ли добавить красный класс
-        ? ' ' + s.big_red
-        : '')
-
 
     return (
         <div className={s.counter_wrapper}>
             <div className={s.count_field}>
-                <span className={finalClassName}>{count}</span>
+                <SetValueInput
+                    name={'max value'}
+                    onChange={addMaxValue}
+                    value={props.maxValue}
+                />
+                <SetValueInput
+                    name={'start value'}
+                    onChange={addStartValue}
+                    value={props.startValue}
+                />
             </div>
             <div className={s.buttons_wrapper}>
-                <Button name={'inc'} callback={increaseCounter} disabled={count === 5}/>
-                <Button name={'reset'} callback={resetCounter} disabled={count === 0}/>
+                <Button name={'set'}
+                        callback={()=>props.setEditMode(false)}
+                        disabled={props.startValue < 0 || props.maxValue < 0 || props.maxValue <= props.startValue}/>
             </div>
         </div>
     )

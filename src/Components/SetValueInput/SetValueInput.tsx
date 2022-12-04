@@ -1,24 +1,25 @@
-import s from './Button.module.css'
+import s from './SetValueInput.module.css'
+import {useState} from "react";
 
 
-type ButtonPropsType = {
+type SetValueInputPropsType = {
     name: string;
-    callback: () => void;
-    disabled?: boolean;
+    onChange:(value: string)=>void
+    value:number
 }
 
-export const Button = (props: ButtonPropsType) => {
-    const onclickHandler = () => {
-        props.callback();
-    }
+export const SetValueInput = (props: SetValueInputPropsType) => {
 
     return (
-        <button
-            className={s.button}
-            onClick={onclickHandler}
-            disabled={props.disabled}
-        >
-            {props.name}
-        </button>
+        <div className={s.setValue_wrapper}>
+            <span>{props.name}:</span>
+            <input
+                value={props.value}
+                onChange={(e) => props.onChange(e.currentTarget.value)}
+                className={+props.value < 0
+                    ? s.error_input
+                    : ''}
+                type="number"/>
+        </div>
     )
 }
