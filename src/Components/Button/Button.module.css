@@ -1,0 +1,31 @@
+.button {
+    display: flex;
+    align-items: center;
+    background: #43ebf7;
+    color: #282c34;
+    padding: 20px;
+    font-weight: bolder;
+    font-size: 60px;
+    border-radius: 10px;
+    border: none;
+}
+
+.default {
+    background: #0066CC;
+}
+
+.button:active {
+    background: #282c34;
+    color: black;
+}
+
+.button:active:disabled {
+    background: #43ebf7;
+    color: #282c34;
+    opacity: 0.5;
+}
+
+.button:disabled {
+    opacity: 0.5;
+}
+
