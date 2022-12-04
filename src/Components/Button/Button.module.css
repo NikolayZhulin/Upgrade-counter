@@ -1,13 +1,13 @@
 .button {
+    padding: 20px;
     display: flex;
     align-items: center;
-    background: #43ebf7;
-    color: #282c34;
-    padding: 20px;
     font-weight: bolder;
     font-size: 60px;
     border-radius: 10px;
     border: none;
+    background: #43ebf7;
+    color: #282c34;
 }
 
 .default {

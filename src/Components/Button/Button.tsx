@@ -1,4 +1,5 @@
 import s from './Button.module.css'
+import React from "react";
 
 
 type ButtonPropsType = {
@@ -7,18 +8,20 @@ type ButtonPropsType = {
     disabled?: boolean;
 }
 
-export const Button = (props: ButtonPropsType) => {
-    const onclickHandler = () => {
-        props.callback();
+export const Button: React.FC<ButtonPropsType> = (
+    {
+        name,
+        callback,
+        disabled
     }
-
+) => {
     return (
         <button
             className={s.button}
-            onClick={onclickHandler}
-            disabled={props.disabled}
+            onClick={() => callback()}
+            disabled={disabled}
         >
-            {props.name}
+            {name}
         </button>
     )
 }

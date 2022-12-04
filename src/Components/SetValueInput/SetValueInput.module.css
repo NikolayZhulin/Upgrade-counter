@@ -5,26 +5,23 @@
 }
 
 .setValue_wrapper span {
-    font-weight: bolder;
     font-size: 20px;
+    font-weight: bolder;
     color: #282c34;
 }
 
 input {
     width: 130px;
     height: 25px;
-
     display: flex;
-
     text-align: center;
     font-size: 20px;
-
     border-radius: 5px;
     border: none;
-    outline:3px solid #282c34;
+    outline: 3px solid #282c34;
 }
 
-.error_input{
+.error_input {
     background-color: #e5204e;
     opacity: 0.8;
 }

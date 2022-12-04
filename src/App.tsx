@@ -9,19 +9,19 @@ function App() {
     let [maxValue, setMaxValue] = useState(5);
     let [editMode, setEditMode] = useState(false);
 
-    useEffect(() => {
-        let maxVal = localStorage.getItem('maxValue')
-        let startVal = localStorage.getItem('startValue')
-        maxVal && setMaxValue(JSON.parse(maxVal))
-        startVal && setStartValue(JSON.parse(startVal))
-    }, [])
+    useEffect(() => {  // get and set in state start and max values from local storage
+        let maxVal = localStorage.getItem('maxValue');
+        let startVal = localStorage.getItem('startValue');
+        maxVal && setMaxValue(JSON.parse(maxVal));
+        startVal && setStartValue(JSON.parse(startVal));
+    }, []);
 
-    let setMaxValueToLocalStorage = (val: number) => {
+    let setMaxValueToLocalStorage = (val: number) => { //set to local storage current max value of counter
         localStorage.setItem('maxValue', JSON.stringify(val));
         setMaxValue(val);
     }
 
-    let setStartValueToLocalStorage = (val: number) => {
+    let setStartValueToLocalStorage = (val: number) => { //set to local storage current start value of counter
         localStorage.setItem('startValue', JSON.stringify(val));
         setStartValue(val);
     }
@@ -38,7 +38,6 @@ function App() {
             <Counter maxValue={maxValue}
                      startValue={startValue}
                      editMode={editMode}
-
             />
         </div>
     );
