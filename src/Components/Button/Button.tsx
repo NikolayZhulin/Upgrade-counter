@@ -18,7 +18,7 @@ export const Button: React.FC<ButtonPropsType> = (
     return (
         <button
             className={s.button}
-            onClick={() => callback()}
+            onClick={callback}
             disabled={disabled}
         >
             {name}

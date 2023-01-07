@@ -1,4 +1,4 @@
-import s from './SetCounter.module.css'
+import s from './SettingsForCounter.module.css'
 import {Button} from "../Button/Button";
 import {SetValueInput} from "../SetValueInput/SetValueInput";
 import React from "react";
@@ -9,25 +9,32 @@ type SetCounterPropsType = {
     setStartValue: (value: number) => void;
     setMaxValue: (value: number) => void;
     setEditMode: (editMode: boolean) => void;
+    setCount: (value: number) => void;
 }
 
-export const SetCounter: React.FC<SetCounterPropsType> = (
+export const SettingsForCounter: React.FC<SetCounterPropsType> = (
     {
         startValue,
         maxValue,
         setStartValue,
         setMaxValue,
         setEditMode,
+        setCount
     }
 ) => {
 
-    const StartValueSetter = (val: string) => { // turn on edit mode and set start value in state
+    const startValueSetter = (val: string) => { // turn on edit mode and set start value in state
         setEditMode(true);
         setStartValue(+val);
     }
-    const MaxValueSetter = (val: string) => {// turn on edit mode and set max value in state
+    const maxValueSetter = (val: string) => {// turn on edit mode and set max value in state
         setEditMode(true);
-        setMaxValue(+val);
+         setMaxValue(+val);
+    }
+
+    const setNewValues = () =>{
+        setCount(startValue)
+        setEditMode(false)
     }
 
     return (
@@ -35,18 +42,18 @@ export const SetCounter: React.FC<SetCounterPropsType> = (
             <div className={s.count_field}>
                 <SetValueInput
                     name={'max value'}
-                    onChange={MaxValueSetter}
+                    onChange={maxValueSetter}
                     value={maxValue}
                 />
                 <SetValueInput
                     name={'start value'}
-                    onChange={StartValueSetter}
+                    onChange={startValueSetter}
                     value={startValue}
                 />
             </div>
             <div className={s.buttons_wrapper}>
                 <Button name={'set'}
-                        callback={() => setEditMode(false)}
+                        callback={setNewValues}
                         disabled={startValue < 0 || maxValue < 0 || maxValue <= startValue}/>
             </div>
         </div>

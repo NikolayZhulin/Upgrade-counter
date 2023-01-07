@@ -1,12 +1,15 @@
 import s from './Counter.module.css'
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Button} from "../Button/Button";
+
 
 
 type CounterPropsType = {
     startValue: number;
     maxValue: number;
     editMode: boolean;
+    count: number;
+    setCount: (value: number) => void
 }
 
 export const Counter: React.FC<CounterPropsType> = (
@@ -14,12 +17,9 @@ export const Counter: React.FC<CounterPropsType> = (
         startValue,
         maxValue,
         editMode,
+        count,
+        setCount
     }) => {
-    const [count, setCount] = useState<number>(startValue);
-
-    useEffect(() => { // set current start value in counter useState
-        setCount(startValue);
-    }, [startValue]);
 
     const finalClassName = s.count_number //add red color if counter reached limit
         + (count === maxValue
