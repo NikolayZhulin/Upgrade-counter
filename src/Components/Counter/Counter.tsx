@@ -1,6 +1,8 @@
 import s from './Counter.module.css'
 import React from "react";
 import {Button} from "../Button/Button";
+import {useDispatch} from "react-redux";
+import {increaseCountAC, resetCountAC} from "../../ActionCreators/CounterActionCreators";
 
 
 
@@ -9,7 +11,6 @@ type CounterPropsType = {
     maxValue: number;
     editMode: boolean;
     count: number;
-    setCount: (value: number) => void
 }
 
 export const Counter: React.FC<CounterPropsType> = (
@@ -18,8 +19,18 @@ export const Counter: React.FC<CounterPropsType> = (
         maxValue,
         editMode,
         count,
-        setCount
     }) => {
+
+    const dispatch = useDispatch();
+
+    const increaseCountHandler =() =>{ //increase counter value on 1
+        dispatch(increaseCountAC())
+    }
+
+    const resetCountHandler =() =>{ //reset counter value for start value
+        dispatch(resetCountAC(startValue))
+    }
+
 
     const finalClassName = s.count_number //add red color if counter reached limit
         + (count === maxValue
@@ -39,12 +50,12 @@ export const Counter: React.FC<CounterPropsType> = (
 
             <div className={s.buttons_wrapper}>
                 <Button name={'inc'}
-                        callback={() => setCount(count + 1)}
+                        callback={increaseCountHandler}
                         disabled={count === maxValue || editMode}
                 />
                 <Button
                     name={'reset'}
-                    callback={() => setCount(startValue)}
+                    callback={resetCountHandler}
                     disabled={count === startValue || editMode}
                 />
             </div>

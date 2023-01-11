@@ -2,40 +2,38 @@ import s from './SettingsForCounter.module.css'
 import {Button} from "../Button/Button";
 import {SetValueInput} from "../SetValueInput/SetValueInput";
 import React from "react";
+import {useDispatch} from "react-redux";
+import {setCountAC, setEditModeAC, setMaxValueAC, setStartValueAC} from "../../ActionCreators/CounterActionCreators";
+
 
 type SetCounterPropsType = {
     startValue: number;
     maxValue: number;
-    setStartValue: (value: number) => void;
-    setMaxValue: (value: number) => void;
-    setEditMode: (editMode: boolean) => void;
-    setCount: (value: number) => void;
 }
 
-export const SettingsForCounter: React.FC<SetCounterPropsType> = (
-    {
-        startValue,
-        maxValue,
-        setStartValue,
-        setMaxValue,
-        setEditMode,
-        setCount
-    }
-) => {
+export const SettingsForCounter: React.FC<SetCounterPropsType> = ({
+                                                                      startValue,
+                                                                      maxValue,
+                                                                  }) => {
+
+    const dispatch = useDispatch();
 
     const startValueSetter = (val: string) => { // turn on edit mode and set start value in state
-        setEditMode(true);
-        setStartValue(+val);
-    }
-    const maxValueSetter = (val: string) => {// turn on edit mode and set max value in state
-        setEditMode(true);
-         setMaxValue(+val);
+        dispatch(setEditModeAC(true))
+        dispatch(setStartValueAC(+val));
     }
 
-    const setNewValues = () =>{
-        setCount(startValue)
-        setEditMode(false)
+    const maxValueSetter = (val: string) => {// turn on edit mode and set max value in state
+        dispatch(setEditModeAC(true))
+        dispatch(setMaxValueAC(+val));
     }
+
+    const setNewValues = () => {  //set new value for counter and turn off edit mode
+        dispatch(setCountAC(startValue))
+        dispatch(setEditModeAC(false))
+    }
+
+    const disabledFlag = startValue < 0 || maxValue < 0 || maxValue <= startValue;
 
     return (
         <div className={s.counter_wrapper}>
@@ -54,7 +52,7 @@ export const SettingsForCounter: React.FC<SetCounterPropsType> = (
             <div className={s.buttons_wrapper}>
                 <Button name={'set'}
                         callback={setNewValues}
-                        disabled={startValue < 0 || maxValue < 0 || maxValue <= startValue}/>
+                        disabled={disabledFlag}/>
             </div>
         </div>
     )

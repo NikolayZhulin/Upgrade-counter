@@ -1,51 +1,35 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import s from './App.module.css';
 import {Counter} from "./Components/Counter/Counter";
 import {SettingsForCounter} from "./Components/SettingsForCounter/SettingsForCounter";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "./store/store";
+import {counterInformationStateType, getInitialValuesFromLC} from "./Reducers/Counter-reducer";
 
 
 function App() {
 
-    const [startValue, setStartValue] = useState(0);
-    const [maxValue, setMaxValue] = useState(5);
-    const [count, setCount] = useState<number>(startValue);
-    const [editMode, setEditMode] = useState(false);
 
+    const countValues = useSelector<AppRootState, counterInformationStateType>(state => state.counter.counterState)
+
+const dispatch = useDispatch()
 
     useEffect(() => {  // get and set in state start and max values from local storage
-        let maxVal = localStorage.getItem('maxValue');
-        let startVal = localStorage.getItem('startValue');
-        maxVal && setMaxValue(JSON.parse(maxVal));
-        startVal && setStartValue(JSON.parse(startVal));
-        startVal && setCount(JSON.parse(startVal));
+        // @ts-ignore
+        dispatch(getInitialValuesFromLC())
     }, []);
-
-
-    let setMaxValueToLocalStorage = (val: number) => { //set to local storage current max value of counter
-        val > 0 && localStorage.setItem('maxValue', JSON.stringify(val));
-        setMaxValue(val);
-    }
-
-    let setStartValueToLocalStorage = (val: number) => { //set to local storage current start value of counter
-        val > 0 && localStorage.setItem('startValue', JSON.stringify(val));
-        setStartValue(val);
-    }
 
     return (
         <div className={s.app}>
             <SettingsForCounter
-                maxValue={maxValue}
-                startValue={startValue}
-                setStartValue={setStartValueToLocalStorage}
-                setMaxValue={setMaxValueToLocalStorage}
-                setEditMode={setEditMode}
-                setCount={setCount}
+                maxValue={countValues.maxValue}
+                startValue={countValues.startValue}
             />
-            <Counter maxValue={maxValue}
-                     startValue={startValue}
-                     editMode={editMode}
-                     count={count}
-                     setCount={setCount}
+            <Counter
+                maxValue={countValues.maxValue}
+                     startValue={countValues.startValue}
+                     editMode={countValues.editMode}
+                     count={countValues.count}
             />
         </div>
     );
