@@ -3,7 +3,8 @@ import {Button} from "../Button/Button";
 import {SetValueInput} from "../SetValueInput/SetValueInput";
 import React from "react";
 import {useDispatch} from "react-redux";
-import {setCountAC, setEditModeAC, setMaxValueAC, setStartValueAC} from "../../ActionCreators/CounterActionCreators";
+import {setCountAC, setEditModeAC} from "../../ActionCreators/CounterActionCreators";
+import {setMaxValueInLC, setStartValueInLC} from "../../Reducers/Counter-reducer";
 
 
 type SetCounterPropsType = {
@@ -20,12 +21,14 @@ export const SettingsForCounter: React.FC<SetCounterPropsType> = ({
 
     const startValueSetter = (val: string) => { // turn on edit mode and set start value in state
         dispatch(setEditModeAC(true))
-        dispatch(setStartValueAC(+val));
+        // @ts-ignore
+        dispatch(setStartValueInLC(+val))
     }
 
     const maxValueSetter = (val: string) => {// turn on edit mode and set max value in state
         dispatch(setEditModeAC(true))
-        dispatch(setMaxValueAC(+val));
+        // @ts-ignore
+        dispatch(setMaxValueInLC(+val))
     }
 
     const setNewValues = () => {  //set new value for counter and turn off edit mode

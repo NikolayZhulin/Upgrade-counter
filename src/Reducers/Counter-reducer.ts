@@ -1,5 +1,10 @@
-import {CounterActionsType, setCountAC, setMaxValueAC, setStartValueAC} from "../ActionCreators/CounterActionCreators";
-import {ThunkAction} from "redux-thunk";
+import {
+    CounterActionsType,
+    setCountAC,
+    setMaxValueAC,
+    setStartValueAC
+} from "../ActionCreators/CounterActionCreators";
+
 
 export type CounterStateType = {
     counterState: counterInformationStateType;
@@ -49,8 +54,7 @@ export const counterReducer = (state: CounterStateType = initialCounterState, ac
 }
 
 
-
-export const getInitialValuesFromLC = () => (dispatch:any):void => {
+export const getInitialValuesFromLC = () => (dispatch: any): void => {
 
     let maxVal = localStorage.getItem('maxValue');
     let startVal = localStorage.getItem('startValue');
@@ -60,4 +64,15 @@ export const getInitialValuesFromLC = () => (dispatch:any):void => {
     startVal
     && dispatch(setStartValueAC(+JSON.parse(startVal)))
     && dispatch(setCountAC(+JSON.parse(startVal)));
+
+}
+
+export const setStartValueInLC = (startValue: number) => (dispatch: any): void => {
+    localStorage.setItem('startValue', JSON.stringify(startValue))
+    dispatch(setStartValueAC(startValue));
+}
+
+export const setMaxValueInLC = (maxValue: number) => (dispatch: any): void => {
+    localStorage.setItem('maxValue', JSON.stringify(maxValue))
+    dispatch(setMaxValueAC(maxValue));
 }

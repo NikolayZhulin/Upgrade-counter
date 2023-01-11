@@ -12,7 +12,7 @@ function App() {
 
     const countValues = useSelector<AppRootState, counterInformationStateType>(state => state.counter.counterState)
 
-const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     useEffect(() => {  // get and set in state start and max values from local storage
         // @ts-ignore
@@ -27,9 +27,9 @@ const dispatch = useDispatch()
             />
             <Counter
                 maxValue={countValues.maxValue}
-                     startValue={countValues.startValue}
-                     editMode={countValues.editMode}
-                     count={countValues.count}
+                startValue={countValues.startValue}
+                editMode={countValues.editMode}
+                count={countValues.count}
             />
         </div>
     );

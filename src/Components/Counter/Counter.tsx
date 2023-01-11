@@ -13,6 +13,9 @@ type CounterPropsType = {
     count: number;
 }
 
+const MESSAGE='Enter value and press "set"'
+const ERROR_MESSAGE='Incorrect value'
+
 export const Counter: React.FC<CounterPropsType> = (
     {
         startValue,
@@ -31,22 +34,24 @@ export const Counter: React.FC<CounterPropsType> = (
         dispatch(resetCountAC(startValue))
     }
 
-
     const finalClassName = s.count_number //add red color if counter reached limit
         + (count === maxValue
             ? ' ' + s.big_red
             : '');
 
+    const isChangeMessage = editMode && maxValue >= 0 && startValue >= 0 && maxValue > startValue
+    const isIncorrectMessage = maxValue < 0 || startValue < 0 || maxValue <= startValue
+
     return (
         <div className={s.counter_wrapper}>
-            {!editMode
-                && <div className={s.count_field}><span className={finalClassName}>{count}</span></div>}
 
-            {editMode && maxValue >= 0 && startValue >= 0 && maxValue > startValue
-                && <div className={s.count_field}><span>Enter value and press "set"</span></div>}
+            <div className={s.count_field}>
+                {!editMode && <span className={finalClassName}>{count}</span>}
 
-            {(maxValue < 0 || startValue < 0 || maxValue <= startValue)
-                && <div className={s.count_field}><span className={s.red}>Incorrect value</span></div>}
+                {isChangeMessage && <span>{MESSAGE}</span>}
+
+                {isIncorrectMessage && <span className={s.red}>{ERROR_MESSAGE}</span>}
+            </div>
 
             <div className={s.buttons_wrapper}>
                 <Button name={'inc'}
